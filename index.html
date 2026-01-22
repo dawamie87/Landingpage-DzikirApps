@@ -461,11 +461,12 @@
         // -----------------------------------------------------
         // Slider Logic
         // -----------------------------------------------------
+        // >>>>>> ANDA BISA MENGGANTI LINK GAMBAR DI BAWAH INI <<<<<<
         const images = [
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Home.jpeg",
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Daftar%20Isi.jpeg",
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Index%20Quran.jpeg",
-            "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Al-Qur'an.jpeg",
+            "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Al-Qur%27an.jpeg",
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Zikir%20pagi%20sore.jpeg"
         ];
         
@@ -485,7 +486,8 @@
                 
                 // Fallback jika gambar gagal load
                 img.onerror = function() {
-                    this.src = 'https://placehold.co/280x580?text=Preview+' + (index + 1);
+                    // Gambar placeholder jika link rusak
+                    this.src = 'https://placehold.co/280x580?text=Gambar+' + (index + 1);
                 }
                 
                 sliderContainer.appendChild(img);
