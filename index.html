@@ -45,7 +45,7 @@
                     boxShadow: {
                         'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
                         'glow': '0 0 15px rgba(16, 185, 129, 0.3)',
-                        'phone': '0 0 0 2px #334155, 0 0 0 4px #475569, 0 20px 50px -10px rgba(0,0,0,0.5)',
+                        'card': '0 10px 30px -5px rgba(0, 0, 0, 0.1)',
                     }
                 }
             }
@@ -92,33 +92,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* Slider Animations */
-        .slide-enter {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        .slide-enter-active {
-            opacity: 1;
-            transform: scale(1);
-            transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
-        }
-        .slide-exit {
-            opacity: 1;
-        }
-        .slide-exit-active {
-            opacity: 0;
-            transition: opacity 500ms ease-in-out;
-        }
-        
-        /* Glassy Phone Look */
-        .phone-frame {
-            box-shadow: 
-                inset 0 0 0 2px rgba(255,255,255,0.1), /* Inner highlight */
-                0 0 0 3px #1e293b, /* Thin dark bezel */
-                0 0 0 5px #cbd5e1, /* Outer metal finish */
-                0 25px 50px -12px rgba(0, 0, 0, 0.4); /* Deep shadow */
         }
     </style>
 </head>
@@ -177,29 +150,36 @@
                 </a>
             </div>
 
-            <!-- Modern Phone Slider Mockup -->
-            <div class="relative mt-12 mx-auto w-[280px] h-[580px] fade-in-up delay-300 group">
-                <!-- Phone Frame (Bezel Tipis) -->
-                <div class="absolute inset-0 bg-black rounded-[3rem] phone-frame z-20 pointer-events-none"></div>
-                
-                <!-- Dynamic Island / Notch Kecil -->
-                <div class="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-30 flex justify-center items-center">
-                    <div class="w-16 h-4 bg-slate-900/50 rounded-full"></div>
+            <!-- TAMPILAN GAMBAR SEDERHANA (TANPA FRAME HP) -->
+            <!-- Container ini lebih fleksibel dan tidak akan memotong gambar -->
+            <div class="mt-12 mx-auto max-w-[300px] md:max-w-[320px] fade-in-up delay-300">
+                <div class="relative aspect-[9/19] rounded-2xl shadow-2xl overflow-hidden border-4 border-white bg-white ring-1 ring-slate-200 group">
+                    
+                    <!-- Slider Container -->
+                    <div id="simple-slider" class="w-full h-full relative bg-slate-100">
+                        <!-- Images will be injected here by JS -->
+                        <!-- Placeholder loading state -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
+                            <i data-lucide="image" class="w-8 h-8 mb-2 opacity-50"></i>
+                            <span class="text-xs">Memuat Gambar...</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Arrows (Optional, muncul saat hover) -->
+                    <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-20 text-islamic-700">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+                    <button onclick="nextSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-20 text-islamic-700">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
                 </div>
 
-                <!-- Screen Area (Slider) -->
-                <div class="absolute inset-[3px] rounded-[2.8rem] overflow-hidden bg-white z-10">
-                    <!-- Slider Container -->
-                    <div id="phone-slider" class="w-full h-full relative">
-                        <!-- Images will be injected here by JS -->
-                    </div>
-                </div>
-                
-                <!-- Slider Controls (Dots) - Outside the phone for cleaner look -->
-                <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-2" id="slider-dots">
+                <!-- Dots Indicator di luar gambar -->
+                <div class="flex justify-center gap-2 mt-6" id="slider-dots">
                     <!-- Dots injected by JS -->
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -461,7 +441,8 @@
         // -----------------------------------------------------
         // Slider Logic
         // -----------------------------------------------------
-        // >>>>>> ANDA BISA MENGGANTI LINK GAMBAR DI BAWAH INI <<<<<<
+        // URL Gambar dari GitHub (Telah diperbaiki formatnya agar bisa tampil)
+        // Mengubah "refs/heads/main" menjadi "main" dan encode karakter khusus
         const images = [
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Home.jpeg",
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Daftar%20Isi.jpeg",
@@ -470,57 +451,69 @@
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Zikir%20pagi%20sore.jpeg"
         ];
         
-        const sliderContainer = document.getElementById('phone-slider');
+        const sliderContainer = document.getElementById('simple-slider');
         const dotsContainer = document.getElementById('slider-dots');
         let currentIndex = 0;
+        let slideInterval;
         
         // Initial Render
         function initSlider() {
+            // Bersihkan container
+            sliderContainer.innerHTML = '';
+            dotsContainer.innerHTML = '';
+
             // Create Image Elements
-            images.forEach((imgUrl, index) => {
+            images.forEach((imgSrc, index) => {
                 const img = document.createElement('img');
-                img.src = imgUrl;
-                img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${index === 0 ? 'opacity-100' : 'opacity-0'}`;
-                img.alt = `Tampilan Aplikasi ${index + 1}`;
-                img.setAttribute('data-index', index);
                 
-                // Fallback jika gambar gagal load
+                // Gunakan URL gambar
+                img.src = imgSrc;
+                
+                // Styling
+                img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`;
+                img.alt = `Preview ${index + 1}`;
+                
+                // >>>>> FALLBACK OTOMATIS <<<<<
+                // Jika gambar gagal dimuat (error 404),
+                // Script ini akan otomatis menggantinya dengan gambar Placeholder abu-abu.
                 img.onerror = function() {
-                    // Gambar placeholder jika link rusak
-                    this.src = 'https://placehold.co/280x580?text=Gambar+' + (index + 1);
+                    console.log("Gambar tidak ditemukan, memuat placeholder untuk:", imgSrc);
+                    this.src = `https://placehold.co/320x680/e2e8f0/64748b?text=Gambar+${index + 1}`;
                 }
                 
                 sliderContainer.appendChild(img);
                 
                 // Create Dots
                 const dot = document.createElement('button');
-                dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${index === 0 ? 'bg-islamic-600 w-6' : 'bg-slate-300'}`;
+                dot.className = `h-2 rounded-full transition-all duration-300 ${index === 0 ? 'bg-islamic-600 w-8' : 'bg-slate-300 w-2 hover:bg-islamic-300'}`;
+                dot.ariaLabel = `Lihat gambar ke ${index + 1}`;
                 dot.onclick = () => manualSlide(index);
                 dotsContainer.appendChild(dot);
             });
+            
+            startAutoSlide();
         }
         
         function updateSlider() {
-            // Update Images
             const slides = sliderContainer.querySelectorAll('img');
+            const dots = dotsContainer.querySelectorAll('button');
+            
             slides.forEach((slide, index) => {
                 if(index === currentIndex) {
-                    slide.classList.remove('opacity-0');
-                    slide.classList.add('opacity-100');
+                    slide.classList.remove('opacity-0', 'z-0');
+                    slide.classList.add('opacity-100', 'z-10');
                 } else {
-                    slide.classList.remove('opacity-100');
-                    slide.classList.add('opacity-0');
+                    slide.classList.remove('opacity-100', 'z-10');
+                    slide.classList.add('opacity-0', 'z-0');
                 }
             });
             
-            // Update Dots
-            const dots = dotsContainer.querySelectorAll('button');
             dots.forEach((dot, index) => {
                 if(index === currentIndex) {
                     dot.classList.remove('bg-slate-300', 'w-2');
-                    dot.classList.add('bg-islamic-600', 'w-6');
+                    dot.classList.add('bg-islamic-600', 'w-8');
                 } else {
-                    dot.classList.remove('bg-islamic-600', 'w-6');
+                    dot.classList.remove('bg-islamic-600', 'w-8');
                     dot.classList.add('bg-slate-300', 'w-2');
                 }
             });
@@ -530,6 +523,11 @@
             currentIndex = (currentIndex + 1) % images.length;
             updateSlider();
         }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateSlider();
+        }
         
         function manualSlide(index) {
             currentIndex = index;
@@ -537,11 +535,13 @@
             resetInterval();
         }
         
-        let slideInterval = setInterval(nextSlide, 3000); // 3 detik
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 3500); // Ganti gambar tiap 3.5 detik
+        }
         
         function resetInterval() {
             clearInterval(slideInterval);
-            slideInterval = setInterval(nextSlide, 3000);
+            startAutoSlide();
         }
 
         // Start Slider
