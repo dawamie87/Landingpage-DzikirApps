@@ -150,22 +150,20 @@
                 </a>
             </div>
 
-            <!-- TAMPILAN GAMBAR SEDERHANA (TANPA FRAME HP) -->
-            <!-- Container ini lebih fleksibel dan tidak akan memotong gambar -->
+            <!-- TAMPILAN GAMBAR SEDERHANA -->
             <div class="mt-12 mx-auto max-w-[300px] md:max-w-[320px] fade-in-up delay-300">
                 <div class="relative aspect-[9/19] rounded-2xl shadow-2xl overflow-hidden border-4 border-white bg-white ring-1 ring-slate-200 group">
                     
                     <!-- Slider Container -->
                     <div id="simple-slider" class="w-full h-full relative bg-slate-100">
                         <!-- Images will be injected here by JS -->
-                        <!-- Placeholder loading state -->
                         <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-400">
                             <i data-lucide="image" class="w-8 h-8 mb-2 opacity-50"></i>
                             <span class="text-xs">Memuat Gambar...</span>
                         </div>
                     </div>
                     
-                    <!-- Navigation Arrows (Optional, muncul saat hover) -->
+                    <!-- Navigation Arrows -->
                     <button onclick="prevSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-20 text-islamic-700">
                         <i data-lucide="chevron-left" class="w-5 h-5"></i>
                     </button>
@@ -174,10 +172,8 @@
                     </button>
                 </div>
 
-                <!-- Dots Indicator di luar gambar -->
-                <div class="flex justify-center gap-2 mt-6" id="slider-dots">
-                    <!-- Dots injected by JS -->
-                </div>
+                <!-- Dots Indicator -->
+                <div class="flex justify-center gap-2 mt-6" id="slider-dots"></div>
             </div>
 
         </div>
@@ -284,7 +280,7 @@
                 <p class="text-slate-600 mt-3">Aplikasi ini tidak perlu diunduh dari Play Store. Cukup "Pasang" dari browser.</p>
             </div>
 
-            <!-- Tab Switcher (Visual only for simplicity or JS toggle) -->
+            <!-- Tab Switcher -->
             <div class="bg-sand-50 p-1 rounded-xl flex mb-8 max-w-xs mx-auto border border-sand-200">
                 <button onclick="switchTab('android')" id="btn-android" class="flex-1 py-2 px-4 rounded-lg text-sm font-bold bg-white shadow-sm text-islamic-700 transition-all">Android</button>
                 <button onclick="switchTab('ios')" id="btn-ios" class="flex-1 py-2 px-4 rounded-lg text-sm font-bold text-slate-500 hover:text-slate-700 transition-all">iOS / iPhone</button>
@@ -403,21 +399,64 @@
         </div>
     </section>
 
-    <!-- Support / Infaq Section -->
-    <section class="py-16 bg-white">
-         <div class="max-w-md mx-auto px-6 text-center md:max-w-2xl">
-            <div class="w-16 h-16 bg-islamic-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i data-lucide="heart" class="text-islamic-600 w-8 h-8"></i>
+    <!-- Source Code & Support Section -->
+    <section class="py-16 bg-white border-t border-slate-100">
+         <div class="max-w-md mx-auto px-6 md:max-w-3xl">
+            
+            <!-- Source Code Offer (Highlight) -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 shadow-xl text-center mb-16 relative overflow-hidden group">
+                <!-- Decorative Elements -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-islamic-500 opacity-10 rounded-full blur-xl transform -translate-x-5 translate-y-5"></div>
+                
+                <div class="relative z-10">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-white/10 text-white rounded-xl mb-4 backdrop-blur-sm border border-white/10">
+                        <i data-lucide="code-2" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="font-serif text-2xl font-bold text-white mb-3">Tertarik dengan Source Code?</h2>
+                    <p class="text-slate-300 mb-8 leading-relaxed text-sm md:text-base">
+                        Dapatkan <strong>Source Code Lengkap</strong> aplikasi ini untuk dikembangkan sendiri atau untuk kebutuhan proyek Anda.
+                        <span class="block mt-1 text-islamic-400 font-medium">(Berbayar)</span>
+                    </p>
+                    
+                    <a href="https://wa.me/6285281323336?text=Assalamualaikum,%20saya%20tertarik%20dengan%20source%20code%20aplikasi%20Dzikir%20PWA" target="_blank" class="inline-flex items-center gap-2 bg-islamic-600 hover:bg-islamic-500 text-white font-semibold py-3.5 px-8 rounded-xl transition-all shadow-lg hover:shadow-islamic-500/25 transform hover:-translate-y-0.5">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        Hubungi 0852-8132-3336
+                    </a>
+                </div>
             </div>
-            <h2 class="font-serif text-2xl font-bold text-islamic-900 mb-4">Dukung Pengembangan</h2>
-            <p class="text-slate-600 mb-8 leading-relaxed">
-                Aplikasi ini sepenuhnya <strong>GRATIS</strong> dan bebas iklan untuk kenyamanan ibadah Anda. 
-                Jika Anda ingin berkontribusi untuk biaya server dan pengembangan fitur selanjutnya, silakan berinfaq seikhlasnya.
-            </p>
-            <!-- Tombol Saweria/Support (Placeholder) -->
-            <button class="bg-slate-100 text-slate-700 hover:bg-slate-200 px-6 py-3 rounded-xl font-medium transition-colors text-sm">
-                Hubungi Pengembang untuk Dukungan
-            </button>
+
+            <!-- Donation Toggle (Subtle/Hidden by Default) -->
+            <div class="text-center">
+                <p class="text-slate-500 text-sm mb-3">Aplikasi ini gratis dan bebas iklan untuk umat.</p>
+                <button onclick="toggleDonasi()" class="inline-flex items-center gap-2 text-islamic-700 hover:text-islamic-800 font-medium text-sm transition-colors group">
+                    <i data-lucide="heart" class="w-4 h-4 group-hover:fill-current transition-colors"></i>
+                    <span class="border-b border-dashed border-islamic-300 hover:border-islamic-600 pb-0.5">Dukung Pengembangan (Infaq)</span>
+                </button>
+                
+                <!-- Hidden Bank Info -->
+                <div id="donasi-info" class="hidden mt-6 transition-all duration-300 ease-out opacity-0 translate-y-2">
+                    <div class="bg-sand-50 border border-sand-200 rounded-xl p-5 max-w-xs mx-auto shadow-sm relative">
+                        <!-- Arrow Up -->
+                        <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-sand-50 border-l border-t border-sand-200 transform rotate-45"></div>
+                        
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Transfer Bank (BCA)</p>
+                        <div class="flex items-center justify-center gap-3 mb-1 bg-white p-2 rounded-lg border border-sand-100">
+                            <span class="font-mono font-bold text-slate-800 text-lg tracking-wide select-all">676030548</span>
+                            <button onclick="copyRekening()" class="text-islamic-600 hover:bg-islamic-50 p-1.5 rounded-md transition-colors" title="Salin">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-2">a.n. Ahmad Dawami</p>
+                        
+                        <!-- Toast Notification -->
+                        <div id="copy-toast" class="absolute left-1/2 -translate-x-1/2 bottom-2 bg-slate-800 text-white text-[10px] py-1 px-3 rounded-full opacity-0 transition-opacity pointer-events-none">
+                            Tersalin!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
          </div>
     </section>
 
@@ -441,8 +480,6 @@
         // -----------------------------------------------------
         // Slider Logic
         // -----------------------------------------------------
-        // URL Gambar dari GitHub (Telah diperbaiki formatnya agar bisa tampil)
-        // Mengubah "refs/heads/main" menjadi "main" dan encode karakter khusus
         const images = [
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Home.jpeg",
             "https://raw.githubusercontent.com/dawamie87/Zikir-dan-Doa-Qur-ani/main/assets/Daftar%20Isi.jpeg",
@@ -473,9 +510,6 @@
                 img.className = `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`;
                 img.alt = `Preview ${index + 1}`;
                 
-                // >>>>> FALLBACK OTOMATIS <<<<<
-                // Jika gambar gagal dimuat (error 404),
-                // Script ini akan otomatis menggantinya dengan gambar Placeholder abu-abu.
                 img.onerror = function() {
                     console.log("Gambar tidak ditemukan, memuat placeholder untuk:", imgSrc);
                     this.src = `https://placehold.co/320x680/e2e8f0/64748b?text=Gambar+${index + 1}`;
@@ -577,6 +611,46 @@
                 contentIos.classList.remove('hidden');
                 contentAndroid.classList.add('hidden');
             }
+        }
+
+        // Toggle Donasi Section
+        function toggleDonasi() {
+            const info = document.getElementById('donasi-info');
+            if (info.classList.contains('hidden')) {
+                info.classList.remove('hidden');
+                // Small delay to allow display:block to apply before opacity transition
+                setTimeout(() => {
+                    info.classList.remove('opacity-0', 'translate-y-2');
+                }, 10);
+            } else {
+                info.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    info.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Copy Rekening Logic
+        function copyRekening() {
+            const text = "676030548";
+            
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                const toast = document.getElementById('copy-toast');
+                toast.classList.remove('opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('opacity-0');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            
+            document.body.removeChild(textArea);
         }
 
         // Navbar Scroll Effect
